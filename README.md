@@ -779,58 +779,16 @@ do
     WalkSpeedSliderUI:OnChanged(function(value)
         LocalPlayer.Character.Humanoid.WalkSpeed = value
     end)
-    local JumpHeightSliderUI Misc:AddToggle(
-        "InfiniteJumpToggle",
-        {
-            ["Title"] = "Infinite Jumps",
-            ["Description"] = "Enable or disable infinite jumps.",
-            ["Default"] = false,
-            ["Callback"] = function(v183)
-                _G.infinjump = v183
-            end
-        }
-    )
-    if not _G.infinJumpStarted then
-        local v244 = 831 - (762 + 69)
-        local v245
-        local v246
-        while true do
-            if (v244 == 0) then
-                _G.infinJumpStarted = true
-                _G.infinjump = false
-                v244 = 3 - 2
-            end
-            if (v244 == 1) then
-                v245 = game:GetService("Players").LocalPlayer
-                v246 = v245:GetMouse()
-                v244 = 2
-            end
-            if (2 == v244) then
-                v246.KeyDown:Connect(
-                    function(v315)
-                        if _G.infinjump then
-                            if (v315:byte() == 32) then
-                                local v379 = 0
-                                local v380
-                                while true do
-                                    if (v379 == 0) then
-                                        v380 = v245.Character and v245.Character:FindFirstChildOfClass("Humanoid")
-                                        if v380 then
-                                            v380:ChangeState("Jumping")
-                                            wait()
-                                            v380:ChangeState("Seated")
-                                        end
-                                        break
-                                    end
-                                end
-                            end
-                        end
-                    end
-                )
-                break
-            end
-        end
-    end
+    local JumpHeightSliderUI = Tabs.Misc:AddSlider("JumpHeightSliderUI", {
+        Title = "Jump Height",
+        Min = 50,
+        Max = 999,
+        Default = 50,
+        Rounding = 1,
+    })
+    JumpHeightSliderUI:OnChanged(function(value)
+        LocalPlayer.Character.Humanoid.JumpPower = value
+    end)
 
 
     local ToggleNoclip = Tabs.Misc:AddToggle("ToggleNoclip", {Title = "Noclip", Default = false })
