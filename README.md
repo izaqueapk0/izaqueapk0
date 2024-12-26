@@ -578,7 +578,7 @@ do
         local RequireRod = PlayerGui.hud.safezone.equipment.rods.scroll.safezone:FindFirstChild("Rod Of The Depths")
         if not RequireRod then return ShowNotification("Requirement Rod Of The Depths") end
         while Options.RodDupe.Value do
-            local args1 = {[1] = "Rod of the Forgotten Fang"}
+            local args1 = {[1] = "Rod Of The Forgotten Fang Render"}
             game:GetService("ReplicatedStorage").events.equiprod:FireServer(unpack(args1))
 
             local args2 = {[1] = "Rod Of The Depths"}
