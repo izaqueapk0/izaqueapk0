@@ -410,24 +410,7 @@ function rememberPosition()
         end
     end)
 end
-function SellHand()
-    local currentPosition = HumanoidRootPart.CFrame
-    local sellPosition = CFrame.new(464, 151, 232)
-    local wasAutoFreezeActive = false
-    if AutoFreeze then
-        wasAutoFreezeActive = true
-        AutoFreeze = false
-    end
-    HumanoidRootPart.CFrame = sellPosition
-    task.wait(0.5)
-    workspace:WaitForChild("world"):WaitForChild("npcs"):WaitForChild("Marc Merchant"):WaitForChild("merchant"):WaitForChild("sell"):InvokeServer()
-    task.wait(1)
-    HumanoidRootPart.CFrame = currentPosition
-    if wasAutoFreezeActive then
-        AutoFreeze = true
-        rememberPosition()
-    end
-end
+
 function SellAll()
     local currentPosition = HumanoidRootPart.CFrame
     local sellPosition = CFrame.new(464, 151, 232)
@@ -454,55 +437,6 @@ NoclipConnection = RunService.Stepped:Connect(function()
             for i, v in pairs(LocalCharacter:GetDescendants()) do
                 if v:IsA("BasePart") and v.CanCollide == true then
                     v.CanCollide = false
-                end
-            end
-        end
-    end
-end)
-
--- // // // Dupe // // // --
-local DupeEnabled = false
-local DupeConnection
-local function autoDupe()
-    local hud = LocalPlayer.PlayerGui:FindFirstChild("hud")
-    if hud then
-        local safezone = hud:FindFirstChild("safezone")
-        if safezone then
-            local bodyAnnouncements = safezone:FindFirstChild("bodyannouncements")
-            if bodyAnnouncements then
-                local offerFrame = bodyAnnouncements:FindFirstChild("offer")
-                if offerFrame and offerFrame:FindFirstChild("confirm") then
-                    firesignal(offerFrame.confirm.MouseButton1Click)
-                end
-            end
-        end
-    end
-end
-
-local function startAutoDupe()
-    if DupeConnection or not DupeEnabled then return end
-    DupeConnection = RunService.RenderStepped:Connect(autoDupe)
-end
-
-local function stopAutoDupe()
-    if DupeConnection then
-        DupeConnection:Disconnect()
-        DupeConnection = nil
-    end
-end
-
-PlayerGui.DescendantAdded:Connect(function(descendant)
-    if DupeEnabled and descendant.Name == "confirm" and descendant.Parent and descendant.Parent.Name == "offer" then
-        local hud = LocalPlayer.PlayerGui:FindFirstChild("hud")
-        if hud then
-            local safezone = hud:FindFirstChild("safezone")
-            if safezone then
-                local bodyAnnouncements = safezone:FindFirstChild("bodyannouncements")
-                if bodyAnnouncements then
-                    local offerFrame = bodyAnnouncements:FindFirstChild("offer")
-                    if offerFrame and offerFrame:FindFirstChild("confirm") then
-                        firesignal(offerFrame.confirm.MouseButton1Click)
-                    end
                 end
             end
         end
@@ -644,14 +578,7 @@ do
     end)
 
     -- // Sell Tab // --
-    local section = Tabs.Items:AddSection("Sell Items")
-    Tabs.Items:AddButton({
-        Title = "Sell Hand",
-        Description = "",
-        Callback = function()
-            SellHand()
-        end
-    })
+   
     Tabs.Items:AddButton({
         Title = "Sell All",
         Description = "",
@@ -985,7 +912,7 @@ do
     Tabs.Misc:AddButton({
         Title = "Load RemoteSpy",
         Callback = function()
-            loadstring(game:HttpGetAsync("https://github.com/richie0866/remote-spy/releases/latest/download/RemoteSpy.lua"))()
+            
         end
     })
 
