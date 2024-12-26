@@ -540,12 +540,10 @@ end)
 
 local Tabs = { -- https://lucide.dev/icons/
     Home = Window:AddTab({ Title = "Home", Icon = "home" }),
-    Exclusives = Window:AddTab({ Title = "Exclusives", Icon = "heart" }),
     Main = Window:AddTab({ Title = "Main", Icon = "list" }),
     Items = Window:AddTab({ Title = "Items", Icon = "box" }),
     Teleports = Window:AddTab({ Title = "Teleports", Icon = "map-pin" }),
     Misc = Window:AddTab({ Title = "Misc", Icon = "file-text" }),
-    Trade = Window:AddTab({ Title = "Trade", Icon = "gift" })
 }
 
 local Options = Fluent.Options
@@ -561,71 +559,6 @@ do
         end
     })
 
-    -- // Exclusives Tab // --
-    local sectionExclus = Tabs.Exclusives:AddSection("Exclusives Features")
-    local CountShadows = Tabs.Exclusives:AddToggle("CountShadows", {Title = "Show Count Shadows", Default = false })
-    CountShadows:OnChanged(function()
-        local RequireRod = PlayerGui.hud.safezone.equipment.rods.scroll.safezone:FindFirstChild("Rod Of The Depths")
-        if not RequireRod then return ShowNotification("Requirement Rod Of The Depths") end
-        if Options.CountShadows.Value == true then
-            shadowCountLabel.Visible = true
-        else
-            shadowCountLabel.Visible = false
-        end
-    end)
-    local RodDupe = Tabs.Exclusives:AddToggle("RodDupe", {Title = "Rod Of The Depths Spam", Default = false })
-    RodDupe:OnChanged(function()
-        local RequireRod = PlayerGui.hud.safezone.equipment.rods.scroll.safezone:FindFirstChild("Rod Of The Depths")
-        if not RequireRod then return ShowNotification("Requirement Rod Of The Depths") end
-        while Options.RodDupe.Value do
-            local args1 = {[1] = "Rod Of The Forgotten Fang Render"}
-            game:GetService("ReplicatedStorage").events.equiprod:FireServer(unpack(args1))
-
-            local args2 = {[1] = "Rod Of The Depths"}
-            game:GetService("ReplicatedStorage").events.equiprod:FireServer(unpack(args2))
-            task.wait(RodDupeDelay)
-        end
-    end)
-    local RodDupe_Delay = Tabs.Exclusives:AddSlider("RodDupe_Delay", {
-        Title = "Rod Of The Depths Spam Delay",
-        Description = "",
-        Default = 0.2,
-        Min = 0,
-        Max = 1,
-        Rounding = 1,
-        Callback = function(Value)
-            RodDupeDelay = Value
-        end
-    })
-    Tabs.Exclusives:AddButton({
-        Title = "Dupe Shadow",
-        Description = "",
-        Callback = function()
-            local RequireRod = PlayerGui.hud.safezone.equipment.rods.scroll.safezone:FindFirstChild("Rod Of The Depths")
-            if not RequireRod then return ShowNotification("Requirement Rod Of The Depths") end
-            for i,v in pairs(LocalPlayer.Backpack:GetChildren()) do 
-                if v:FindFirstChild("offer") then
-                    v.Parent = LocalPlayer.Character
-                end
-            end
-            task.wait(2)
-            for i,v in pairs(LocalPlayer.Character:GetChildren()) do 
-                if v:FindFirstChild("offer") then
-                    v.Parent = LocalPlayer.Backpack
-                end
-            end
-        end
-    })
-
-    Tabs.Exclusives:AddButton({
-        Title = "Destroy Shadows",
-        Description = "",
-        Callback = function()
-            for _,shadow in pairs(workspace.Shadows:GetChildren()) do
-    		    shadow:Destroy()
-		    end
-        end
-    })
 
     -- // Main Tab // --
     local section = Tabs.Main:AddSection("Auto Fishing")
@@ -813,7 +746,7 @@ do
     end)
     local TotemTPDropdownUI = Tabs.Teleports:AddDropdown("TotemTPDropdownUI", {
         Title = "Select Totem",
-        Values = {"Aurora", "Sundial", "Windset", "Smokescreen", "Tempest"},
+        Values = {"Aurora", "Sundial", "Windset", "Smokescreen", "Tempest", "Eclipse", "Meteor", "blizade", "avalache"},
         Multi = false,
         Default = nil,
     })
@@ -834,7 +767,19 @@ do
         elseif SelectedTotem == "Tempest" then
             HumanoidRootPart.CFrame = CFrame.new(35, 133, 1943)
             TotemTPDropdownUI:SetValue(nil)
-        end
+        elseif SelectedTotem == "Eclipse" then
+            HumanoidRootPart.CFrame = CFrame.new(5968, 273.9, 838)
+            TotemTPDropdownUI:SetValue(nil)  
+        elseif SelectedTotem == "Meteor" then
+            HumanoidRootPart.CFrame = CFrame.new(-1948, 275.4, 230)
+            TotemTPDropdownUI:SetValue(nil)     
+        elseif SelectedTotem == "blizade" then
+            HumanoidRootPart.CFrame = CFrame.new(20145, 743, 5805)
+            TotemTPDropdownUI:SetValue(nil)
+        elseif SelectedTotem == "avalache" then
+            HumanoidRootPart.CFrame = CFrame.new(19710.8, 467.6, 6052.3)
+            TotemTPDropdownUI:SetValue(nil)
+         end
     end)
     local WorldEventTPDropdownUI = Tabs.Teleports:AddDropdown("WorldEventTPDropdownUI", {
         Title = "Select World Event",
