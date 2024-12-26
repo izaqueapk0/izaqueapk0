@@ -97,7 +97,6 @@ local TpSpotsFolder = Workspace:FindFirstChild("world"):WaitForChild("spawns"):W
 local NpcFolder = Workspace:FindFirstChild("world"):WaitForChild("npcs")
 local PlayerGui = LocalPlayer:WaitForChild("PlayerGui")
 local screenGui = Instance.new("ScreenGui", PlayerGui)
-local shadowCountLabel = Instance.new("TextLabel", screenGui)
 local RenderStepped = RunService.RenderStepped
 local WaitForSomeone = RenderStepped.Wait
 
