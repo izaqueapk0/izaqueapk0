@@ -53,7 +53,7 @@ if DeviceType == "Mobile" then
     TextButton.Size = UDim2.new(0, 45, 0, 45)
     TextButton.AutoButtonColor = false
     TextButton.Font = Enum.Font.SourceSans
-    TextButton.Text = "Open"
+    TextButton.Text = "MEGA"
     TextButton.TextColor3 = Color3.new(220, 125, 255)
     TextButton.TextSize = 20
 
@@ -64,7 +64,7 @@ if DeviceType == "Mobile" then
 end
 
 local Window = Fluent:CreateWindow({
-    Title = game:GetService("MarketplaceService"):GetProductInfo(16732694052).Name .." | MEGA hud  - test",
+    Title = game:GetService("MarketplaceService"):GetProductInfo(16732694052).Name .." | MEGA hud|",
     SubTitle = " (discord.gg/J37PW97j6a)", -- discord link
     TabWidth = 160,
     Size = UDim2.fromOffset(580, 460),
@@ -100,12 +100,10 @@ local screenGui = Instance.new("ScreenGui", PlayerGui)
 local RenderStepped = RunService.RenderStepped
 local WaitForSomeone = RenderStepped.Wait
 
--- // // // Features List // // // --
-
 
 -- // // // Variables // // // --
-local CastMode = "Legit"
-local ShakeMode = "Navigation"
+local CastMode = "Blatant"
+local ShakeMode = "Mouse"
 local ReelMode = "Blatant"
 local CollectMode = "Teleports"
 local teleportSpots = {}
@@ -781,21 +779,65 @@ do
     WalkSpeedSliderUI:OnChanged(function(value)
         LocalPlayer.Character.Humanoid.WalkSpeed = value
     end)
-    local JumpHeightSliderUI = Tabs.Misc:AddSlider("JumpHeightSliderUI", {
-        Title = "Jump Height",
-        Min = 50,
-        Max = 999,
-        Default = 50,
-        Rounding = 1,
-    })
-    JumpHeightSliderUI:OnChanged(function(value)
-        LocalPlayer.Character.Humanoid.JumpPower = value
-    end)
+    local JumpHeightSliderUI Misc:AddToggle(
+        "InfiniteJumpToggle",
+        {
+            ["Title"] = "Infinite Jumps",
+            ["Description"] = "Enable or disable infinite jumps.",
+            ["Default"] = false,
+            ["Callback"] = function(v183)
+                _G.infinjump = v183
+            end
+        }
+    )
+    if not _G.infinJumpStarted then
+        local v244 = 831 - (762 + 69)
+        local v245
+        local v246
+        while true do
+            if (v244 == 0) then
+                _G.infinJumpStarted = true
+                _G.infinjump = false
+                v244 = 3 - 2
+            end
+            if (v244 == 1) then
+                v245 = game:GetService("Players").LocalPlayer
+                v246 = v245:GetMouse()
+                v244 = 2
+            end
+            if (2 == v244) then
+                v246.KeyDown:Connect(
+                    function(v315)
+                        if _G.infinjump then
+                            if (v315:byte() == 32) then
+                                local v379 = 0
+                                local v380
+                                while true do
+                                    if (v379 == 0) then
+                                        v380 = v245.Character and v245.Character:FindFirstChildOfClass("Humanoid")
+                                        if v380 then
+                                            v380:ChangeState("Jumping")
+                                            wait()
+                                            v380:ChangeState("Seated")
+                                        end
+                                        break
+                                    end
+                                end
+                            end
+                        end
+                    end
+                )
+                break
+            end
+        end
+    end
+
 
     local ToggleNoclip = Tabs.Misc:AddToggle("ToggleNoclip", {Title = "Noclip", Default = false })
     ToggleNoclip:OnChanged(function()
         Noclip = Options.ToggleNoclip.Value
     end)
+
 
     -- // Misc Tab // --
     local section = Tabs.Misc:AddSection("Misc")
