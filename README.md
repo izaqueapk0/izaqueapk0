@@ -509,31 +509,6 @@ PlayerGui.DescendantAdded:Connect(function(descendant)
     end
 end)
 
--- // // // Exclusives // // // --
-local shadowCountLabel = Instance.new("TextLabel", screenGui)
-shadowCountLabel.Size = UDim2.new(0, 200, 0, 50)
-shadowCountLabel.Position = UDim2.new(0, 30, 0, 260)
-shadowCountLabel.BackgroundTransparency = 0.5
-shadowCountLabel.BackgroundColor3 = Color3.fromRGB(38, 38, 38) 
-shadowCountLabel.TextColor3 = Color3.new(220, 125, 255)
-shadowCountLabel.Font = Enum.Font.SourceSans
-shadowCountLabel.TextSize = 24
-shadowCountLabel.Text = "Shadow Count: 0"
-
-local corner = Instance.new("UICorner", shadowCountLabel)
-corner.CornerRadius = UDim.new(0, 10)
-
-local function updateShadowCount()
-    local count = #workspace.Shadows:GetChildren()
-    shadowCountLabel.Text = "Shadow Count: " .. count
-end
-
-spawn(function()
-    while true do
-        updateShadowCount()
-        task.wait(0.5)
-    end
-end)
 
 -- // // // Tabs Gui // // // --
 
