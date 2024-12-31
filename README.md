@@ -797,7 +797,7 @@ do
         Noclip = Options.ToggleNoclip.Value
     end)
 
-    local section = Tabs.Misc:AddSection("Scripts")
+    local section = Tabs.Misc:AddSection("misc")
     Tabs.Misc:AddButton({
         Title = "Infinite jump",
         Callback = function()
@@ -840,6 +840,15 @@ do
         end
     end)
     
+    local section = Tabs.Misc:AddSection("scripits")
+    Tabs.Misc:AddButton({
+        Title = "Infinite jump",
+        Callback = function()
+            loadstring(game:HttpGet("https://raw.githubusercontent.com/HeyGyt/infjump/main/main"))()
+        end
+    })
+
+
     local RemoveFog = Tabs.Misc:AddToggle("RemoveFog", {Title = "Remove Fog", Default = false })
     RemoveFog:OnChanged(function()
         if Options.RemoveFog.Value == true then
