@@ -801,7 +801,7 @@ do
     local section = Tabs.Misc:AddSection("Misc")
     Tabs.Misc:AddButton({
         Title = "Infinite jump",
-        Callback = function()
+        OnChanged = function()
             loadstring(game:HttpGet("https://raw.githubusercontent.com/HeyGyt/infjump/main/main"))()
         end
     })
