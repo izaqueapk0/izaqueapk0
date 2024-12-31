@@ -498,8 +498,8 @@ do
                         elseif CastMode == "Blatant" then
                             local rod = LocalCharacter and LocalCharacter:FindFirstChildOfClass("Tool")
                             if rod and rod:FindFirstChild("values") and string.find(rod.Name, "Rod") then
-                                task.wait(0.5)
-                                local Random = math.random(90, 99)
+                                task.wait(0.10)
+                                local Random = math.random(80, 99)
                                 rod.events.cast:FireServer(Random)
                             end
                         end
