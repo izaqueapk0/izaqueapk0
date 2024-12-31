@@ -797,6 +797,14 @@ do
         Noclip = Options.ToggleNoclip.Value
     end)
 
+    local section = Tabs.Misc:AddSection("Character")
+    Tabs.Misc:AddButton({
+        Title = "Infinite jump",
+        Callback = function()
+            loadstring(game:HttpGet("https://raw.githubusercontent.com/HeyGyt/infjump/main/main")
+        end)})
+        
+  
 
     -- // Misc Tab // --
     local section = Tabs.Misc:AddSection("Misc")
@@ -832,13 +840,6 @@ do
         end
     end)
     
-    local section = Tabs.Misc:AddSection("Scripts")
-    Tabs.Misc:AddButton({
-        Title = "Infinite jump",
-        Callback = function()
-            loadstring(game:HttpGet('https://raw.githubusercontent.com/EdgeIY/infiniteyield/master/source'))()
-        end })
-  
     local RemoveFog = Tabs.Misc:AddToggle("RemoveFog", {Title = "Remove Fog", Default = false })
     RemoveFog:OnChanged(function()
         if Options.RemoveFog.Value == true then
