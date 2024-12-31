@@ -446,9 +446,9 @@ end)
 -- // // // Tabs Gui // // // --
 
 local Tabs = { -- https://lucide.dev/icons/
-    Home = Window:AddTab({ Title = "Home", Icon = "home" }),
-    Main = Window:AddTab({ Title = "Main", Icon = "list" }),
-    Items = Window:AddTab({ Title = "Items", Icon = "box" }),
+    Home = Window:AddTab({ Title = "Home", Icon = "box" }),
+    general = Window:AddTab({ Title = "general", Icon = "list" }),
+    Items = Window:AddTab({ Title = "Items", Icon = "ayers" }),
     Teleports = Window:AddTab({ Title = "Teleports", Icon = "map-pin" }),
     Misc = Window:AddTab({ Title = "Misc", Icon = "file-text" }),
 }
@@ -468,8 +468,8 @@ do
 
 
     -- // Main Tab // --
-    local section = Tabs.Main:AddSection("Auto Fishing")
-    local autoCast = Tabs.Main:AddToggle("autoCast", {Title = "Auto Cast", Default = false })
+    local section = Tabs.general:AddSection("Auto Fishing")
+    local autoCast = Tabs.general:AddToggle("autoCast", {Title = "Auto Cast", Default = false })
     autoCast:OnChanged(function()
         local RodName = ReplicatedStorage.playerstats[LocalPlayer.Name].Stats.rod.Value
         if Options.autoCast.Value == true then
@@ -511,7 +511,7 @@ do
             autoCastEnabled = false
         end
     end)
-    local autoShake = Tabs.Main:AddToggle("autoShake", {Title = "Auto Shake", Default = false })
+    local autoShake = Tabs.general:AddToggle("autoShake", {Title = "Auto Shake", Default = false })
     autoShake:OnChanged(function()
         if Options.autoShake.Value == true then
             autoShakeEnabled = true
@@ -521,7 +521,7 @@ do
             stopAutoShake()
         end
     end)
-    local autoReel = Tabs.Main:AddToggle("autoReel", {Title = "Auto Reel", Default = false })
+    local autoReel = Tabs.general:AddToggle("autoReel", {Title = "Auto Reel", Default = false })
     autoReel:OnChanged(function()
         if Options.autoReel.Value == true then
             autoReelEnabled = true
@@ -531,7 +531,7 @@ do
             stopAutoReel()
         end
     end)
-    local FreezeCharacter = Tabs.Main:AddToggle("FreezeCharacter", {Title = "Freeze Character", Default = false })
+    local FreezeCharacter = Tabs.general:AddToggle("FreezeCharacter", {Title = "Freeze Character", Default = false })
     FreezeCharacter:OnChanged(function()
         local oldpos = HumanoidRootPart.CFrame
         FreezeChar = Options.FreezeCharacter.Value
@@ -547,8 +547,8 @@ do
     end)
 
     -- // Mode Tab // --
-    local section = Tabs.Main:AddSection("Mode Fishing")
-    local autoCastMode = Tabs.Main:AddDropdown("autoCastMode", {
+    local section = Tabs.general:AddSection("Mode Fishing")
+    local autoCastMode = Tabs.general:AddDropdown("autoCastMode", {
         Title = "Auto Cast Mode",
         Values = {"Legit", "Blatant"},
         Multi = false,
@@ -557,7 +557,7 @@ do
     autoCastMode:OnChanged(function(Value)
         CastMode = Value
     end)
-    local autoShakeMode = Tabs.Main:AddDropdown("autoShakeMode", {
+    local autoShakeMode = Tabs.general:AddDropdown("autoShakeMode", {
         Title = "Auto Shake Mode",
         Values = {"Navigation", "Mouse"},
         Multi = false,
@@ -566,7 +566,7 @@ do
     autoShakeMode:OnChanged(function(Value)
         ShakeMode = Value
     end)
-    local autoReelMode = Tabs.Main:AddDropdown("autoReelMode", {
+    local autoReelMode = Tabs.general:AddDropdown("autoReelMode", {
         Title = "Auto Reel Mode",
         Values = {"Legit", "Blatant"},
         Multi = false,
