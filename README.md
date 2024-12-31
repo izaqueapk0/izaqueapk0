@@ -586,6 +586,9 @@ do
         end
     })
 
+    -- // players Tab // --
+    local section = Tabs.Items:AddSection("player")
+
     -- // Treasure Tab // --
     local section = Tabs.Items:AddSection("Treasure")
     Tabs.Items:AddButton({
