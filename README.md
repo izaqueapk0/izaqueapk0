@@ -448,7 +448,7 @@ end)
 local Tabs = { -- https://lucide.dev/icons/
     Home = Window:AddTab({ Title = "Home", Icon = "box" }),
     Main = Window:AddTab({ Title = "Main", Icon = "list" }),
-    Items = Window:AddTab({ Title = "Items", Icon = "ayers" }),
+    Items = Window:AddTab({ Title = "Items", Icon = "box" }),
     Teleports = Window:AddTab({ Title = "Teleports", Icon = "map-pin" }),
     Misc = Window:AddTab({ Title = "Misc", Icon = "file-text" }),
 }
@@ -797,17 +797,14 @@ do
         Noclip = Options.ToggleNoclip.Value
     end)
 
-    local section = Tabs.Misc:AddSection("misc")
+    -- // Misc Tab // --
+    local section = Tabs.Misc:AddSection("Misc")
     Tabs.Misc:AddButton({
         Title = "Infinite jump",
         Callback = function()
             loadstring(game:HttpGet("https://raw.githubusercontent.com/HeyGyt/infjump/main/main"))()
         end
     })
-  
-
-    -- // Misc Tab // --
-    local section = Tabs.Misc:AddSection("Misc")
     local BypassRadar = Tabs.Misc:AddToggle("BypassRadar", {Title = "Bypass Fish Radar", Default = false })
     BypassRadar:OnChanged(function()
         for _, v in pairs(game:GetService("CollectionService"):GetTagged("radarTag")) do
