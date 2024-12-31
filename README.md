@@ -799,12 +799,20 @@ do
 
     -- // Misc Tab // --
     local section = Tabs.Misc:AddSection("Misc")
-    Tabs.Misc:AddToggle({
-        Title = "Infinite jump",
-        OnChanged = function()
+    Tabs.Misc:AddButton({
+        Title = "Infinite junp",
+        Callback = function()
             loadstring(game:HttpGet("https://raw.githubusercontent.com/HeyGyt/infjump/main/main"))()
         end
     })
+
+    Tabs.Misc:AddButton({
+        Title = "ESP",
+        Callback = function()
+            loadstring(game:HttpGet("https://raw.githubusercontent.com/Exunys/ESP-Script/main/ESP.lua"))()
+        end
+    })
+
     local BypassRadar = Tabs.Misc:AddToggle("BypassRadar", {Title = "Bypass Fish Radar", Default = false })
     BypassRadar:OnChanged(function()
         for _, v in pairs(game:GetService("CollectionService"):GetTagged("radarTag")) do
