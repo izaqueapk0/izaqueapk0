@@ -911,10 +911,6 @@ do
             loadstring(game:HttpGet('https://raw.githubusercontent.com/EdgeIY/infiniteyield/master/source'))()
         end
     })
-    Tabs.Misc:AddButton({
-        Title = "Load RemoteSpy",
- 
-})
 
 Window:SelectTab(1)
 Fluent:Notify({
