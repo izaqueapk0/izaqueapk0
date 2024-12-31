@@ -770,7 +770,7 @@ do
     WalkOnWaterZone:OnChanged(function(Value)
         WalkZone = Value
     end)
-    local WalkSpeedSliderUI = Tabs.Misc:Addinput("WalkSpeedSliderUI", {
+    local WalkSpeedSliderUI = Tabs.Misc:AddSlider("WalkSpeedSliderUI", {
         Title = "Walk Speed",
         Min = 16,
         Max = 999,
@@ -780,7 +780,7 @@ do
     WalkSpeedSliderUI:OnChanged(function(value)
         LocalPlayer.Character.Humanoid.WalkSpeed = value
     end)
-    local JumpHeightSliderUI = Tabs.Misc:Addinput("JumpHeightSliderUI", {
+    local JumpHeightSliderUI = Tabs.Misc:AddSlider("JumpHeightSliderUI", {
         Title = "Jump Height",
         Min = 50,
         Max = 999,
