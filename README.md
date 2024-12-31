@@ -44,7 +44,7 @@ if DeviceType == "Mobile" then
     ImageLabel.BorderSizePixel = 0
     ImageLabel.Position = UDim2.new(0.5, 0, 0.5, 0)
     ImageLabel.Size = UDim2.new(0, 45, 0, 45)
-    ImageLabel.Image = "rbxassetid://" -- add image here
+    ImageLabel.Image = "rbxassetid://965305329" -- add image here
 
     TextButton.Parent = MainFrame
     TextButton.BackgroundColor3 = Color3.new(1, 1, 1)
