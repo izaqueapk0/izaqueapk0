@@ -837,13 +837,6 @@ do
         end
     end)
     
-    local section = Tabs.Misc:AddSection("scripits")
-    Tabs.Misc:AddButton({
-        Title = "Infinite jump",
-        Callback = function()
-            loadstring(game:HttpGet("https://raw.githubusercontent.com/HeyGyt/infjump/main/main"))()
-        end
-    })
 
 
     local RemoveFog = Tabs.Misc:AddToggle("RemoveFog", {Title = "Remove Fog", Default = false })
