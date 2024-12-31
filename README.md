@@ -681,6 +681,7 @@ do
             TotemTPDropdownUI:SetValue(nil)
          end
     end)
+    
     local WorldEventTPDropdownUI = Tabs.Teleports:AddDropdown("WorldEventTPDropdownUI", {
         Title = "Select World Event",
         Values = {"Strange Whirlpool", "Great Hammerhead Shark", "Great White Shark", "Whale Shark", "The Depths - Serpent", "Isonade"},
@@ -912,13 +913,21 @@ do
     })
     Tabs.Misc:AddButton({
         Title = "Load RemoteSpy",
-        Callback = function()
-            
-        end
-    })
+    local TeleportService = game:GetService("TeleportService")
+    local Players game:GetService("Players")
+    local Local_Player = game:GetService("Players").LocalPlayer
+    local Destination = game.PlaceId
 
-    local section = Tabs.Trade:AddSection("Coming Soon...")
-end
+    local Rejoin = coroutine.create(function()
+    local Success, ErrorMessage = pcall(function()
+        TeleportService:Teleport(Destination, Local_Player)
+    end)
+
+    if ErrorMessage and not Success then
+        warn(ErrorMessage)
+    end
+end)
+})
 
 Window:SelectTab(1)
 Fluent:Notify({
