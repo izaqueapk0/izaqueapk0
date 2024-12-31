@@ -837,8 +837,6 @@ do
         end
     end)
     
-
-
     local RemoveFog = Tabs.Misc:AddToggle("RemoveFog", {Title = "Remove Fog", Default = false })
     RemoveFog:OnChanged(function()
         if Options.RemoveFog.Value == true then
