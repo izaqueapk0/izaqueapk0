@@ -770,7 +770,7 @@ do
     WalkOnWaterZone:OnChanged(function(Value)
         WalkZone = Value
     end)
-    local WalkSpeedSliderUI = Tabs.Misc:AddSlider("WalkSpeedSliderUI", {
+    local WalkSpeedSliderUI = Tabs.Misc:Addinput("WalkSpeedSliderUI", {
         Title = "Walk Speed",
         Min = 16,
         Max = 999,
@@ -780,7 +780,7 @@ do
     WalkSpeedSliderUI:OnChanged(function(value)
         LocalPlayer.Character.Humanoid.WalkSpeed = value
     end)
-    local JumpHeightSliderUI = Tabs.Misc:AddSlider("JumpHeightSliderUI", {
+    local JumpHeightSliderUI = Tabs.Misc:Addinput("JumpHeightSliderUI", {
         Title = "Jump Height",
         Min = 50,
         Max = 999,
@@ -799,7 +799,7 @@ do
 
     -- // Misc Tab // --
     local section = Tabs.Misc:AddSection("Misc")
-    Tabs.Misc:AddButton({
+    Tabs.Misc:AddToggle({
         Title = "Infinite jump",
         OnChanged = function()
             loadstring(game:HttpGet("https://raw.githubusercontent.com/HeyGyt/infjump/main/main"))()
