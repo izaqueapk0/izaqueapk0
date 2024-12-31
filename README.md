@@ -1,14 +1,13 @@
-if getgenv().hub then warn("MEGA hud : Already executed!") return end
-getgenv().hub = true
+if getgenv().cuppink then warn("CupPibk Hub : Already executed!") return end
+getgenv().cuppink = true
 
 if not game:IsLoaded() then
     game.Loaded:Wait()
 end
 
-local Fluent = loadstring(game:HttpGet("https://raw.githubusercontent.com/Knuxy92/Ui-linoria/main/Fluent/Fluent.lua"))()
+local Fluent = loadstring(game:HttpGet("https://github.com/dawid-scripts/Fluent/releases/latest/download/main.lua"))()
 local SaveManager = loadstring(game:HttpGet("https://raw.githubusercontent.com/dawid-scripts/Fluent/master/Addons/SaveManager.lua"))()
 local InterfaceManager = loadstring(game:HttpGet("https://raw.githubusercontent.com/dawid-scripts/Fluent/master/Addons/InterfaceManager.lua"))()
-
 
 local DeviceType = game:GetService("UserInputService").TouchEnabled and "Mobile" or "PC"
 if DeviceType == "Mobile" then
@@ -44,7 +43,7 @@ if DeviceType == "Mobile" then
     ImageLabel.BorderSizePixel = 0
     ImageLabel.Position = UDim2.new(0.5, 0, 0.5, 0)
     ImageLabel.Size = UDim2.new(0, 45, 0, 45)
-    ImageLabel.Image = "rbxassetid://1098659207" -- add image here
+    ImageLabel.Image = "rbxassetid://"
 
     TextButton.Parent = MainFrame
     TextButton.BackgroundColor3 = Color3.new(1, 1, 1)
@@ -54,7 +53,7 @@ if DeviceType == "Mobile" then
     TextButton.Size = UDim2.new(0, 45, 0, 45)
     TextButton.AutoButtonColor = false
     TextButton.Font = Enum.Font.SourceSans
-    TextButton.Text = ""
+    TextButton.Text = "Open"
     TextButton.TextColor3 = Color3.new(220, 125, 255)
     TextButton.TextSize = 20
 
@@ -65,12 +64,12 @@ if DeviceType == "Mobile" then
 end
 
 local Window = Fluent:CreateWindow({
-    Title = game:GetService("MarketplaceService"):GetProductInfo(16732694052).Name .." | MEGA hud|",
-    SubTitle = " (discord.gg/J37PW97j6a)", -- discord link
+    Title = game:GetService("MarketplaceService"):GetProductInfo(16732694052).Name .." | CupPink - Premium",
+    SubTitle = " (discord.gg/cT34Cx4TGC)",
     TabWidth = 160,
     Size = UDim2.fromOffset(580, 460),
     Acrylic = false, -- The blur may be detectable, setting this to false disables blur entirely
-    Theme = "Dark",
+    Theme = "Rose",
     MinimizeKey = Enum.KeyCode.LeftControl -- Used when theres no MinimizeKeybind
 })
 
@@ -98,13 +97,16 @@ local TpSpotsFolder = Workspace:FindFirstChild("world"):WaitForChild("spawns"):W
 local NpcFolder = Workspace:FindFirstChild("world"):WaitForChild("npcs")
 local PlayerGui = LocalPlayer:WaitForChild("PlayerGui")
 local screenGui = Instance.new("ScreenGui", PlayerGui)
+local shadowCountLabel = Instance.new("TextLabel", screenGui)
 local RenderStepped = RunService.RenderStepped
 local WaitForSomeone = RenderStepped.Wait
 
+-- // // // Features List // // // --
+
 
 -- // // // Variables // // // --
-local CastMode = "Blatant"
-local ShakeMode = "Mouse"
+local CastMode = "Legit"
+local ShakeMode = "Navigation"
 local ReelMode = "Blatant"
 local CollectMode = "Teleports"
 local teleportSpots = {}
@@ -117,7 +119,7 @@ local RunCount = false
 -- // // // Functions // // // --
 function ShowNotification(String)
     Fluent:Notify({
-        Title = "MEGA hud ",
+        Title = "CupPink Hub",
         Content = String,
         Duration = 5
     })
@@ -268,7 +270,7 @@ local function autoReel()
     end
 end
 
-local function noperfect()
+local function perfect()
     local reel = PlayerGui:FindFirstChild("reel")
     if not reel then return end
     local bar = reel:FindFirstChild("bar")
@@ -409,7 +411,24 @@ function rememberPosition()
         end
     end)
 end
-
+function SellHand()
+    local currentPosition = HumanoidRootPart.CFrame
+    local sellPosition = CFrame.new(464, 151, 232)
+    local wasAutoFreezeActive = false
+    if AutoFreeze then
+        wasAutoFreezeActive = true
+        AutoFreeze = false
+    end
+    HumanoidRootPart.CFrame = sellPosition
+    task.wait(0.5)
+    workspace:WaitForChild("world"):WaitForChild("npcs"):WaitForChild("Marc Merchant"):WaitForChild("merchant"):WaitForChild("sell"):InvokeServer()
+    task.wait(1)
+    HumanoidRootPart.CFrame = currentPosition
+    if wasAutoFreezeActive then
+        AutoFreeze = true
+        rememberPosition()
+    end
+end
 function SellAll()
     local currentPosition = HumanoidRootPart.CFrame
     local sellPosition = CFrame.new(464, 151, 232)
@@ -442,30 +461,169 @@ NoclipConnection = RunService.Stepped:Connect(function()
     end
 end)
 
+-- // // // Dupe // // // --
+local DupeEnabled = false
+local DupeConnection
+local function autoDupe()
+    local hud = LocalPlayer.PlayerGui:FindFirstChild("hud")
+    if hud then
+        local safezone = hud:FindFirstChild("safezone")
+        if safezone then
+            local bodyAnnouncements = safezone:FindFirstChild("bodyannouncements")
+            if bodyAnnouncements then
+                local offerFrame = bodyAnnouncements:FindFirstChild("offer")
+                if offerFrame and offerFrame:FindFirstChild("confirm") then
+                    firesignal(offerFrame.confirm.MouseButton1Click)
+                end
+            end
+        end
+    end
+end
+
+local function startAutoDupe()
+    if DupeConnection or not DupeEnabled then return end
+    DupeConnection = RunService.RenderStepped:Connect(autoDupe)
+end
+
+local function stopAutoDupe()
+    if DupeConnection then
+        DupeConnection:Disconnect()
+        DupeConnection = nil
+    end
+end
+
+PlayerGui.DescendantAdded:Connect(function(descendant)
+    if DupeEnabled and descendant.Name == "confirm" and descendant.Parent and descendant.Parent.Name == "offer" then
+        local hud = LocalPlayer.PlayerGui:FindFirstChild("hud")
+        if hud then
+            local safezone = hud:FindFirstChild("safezone")
+            if safezone then
+                local bodyAnnouncements = safezone:FindFirstChild("bodyannouncements")
+                if bodyAnnouncements then
+                    local offerFrame = bodyAnnouncements:FindFirstChild("offer")
+                    if offerFrame and offerFrame:FindFirstChild("confirm") then
+                        firesignal(offerFrame.confirm.MouseButton1Click)
+                    end
+                end
+            end
+        end
+    end
+end)
+
+-- // // // Exclusives // // // --
+local shadowCountLabel = Instance.new("TextLabel", screenGui)
+shadowCountLabel.Size = UDim2.new(0, 200, 0, 50)
+shadowCountLabel.Position = UDim2.new(0, 30, 0, 260)
+shadowCountLabel.BackgroundTransparency = 0.5
+shadowCountLabel.BackgroundColor3 = Color3.fromRGB(38, 38, 38) 
+shadowCountLabel.TextColor3 = Color3.new(220, 125, 255)
+shadowCountLabel.Font = Enum.Font.SourceSans
+shadowCountLabel.TextSize = 24
+shadowCountLabel.Text = "Shadow Count: 0"
+
+local corner = Instance.new("UICorner", shadowCountLabel)
+corner.CornerRadius = UDim.new(0, 10)
+
+local function updateShadowCount()
+    local count = #workspace.Shadows:GetChildren()
+    shadowCountLabel.Text = "Shadow Count: " .. count
+end
+
+spawn(function()
+    while true do
+        updateShadowCount()
+        task.wait(0.5)
+    end
+end)
 
 -- // // // Tabs Gui // // // --
 
 local Tabs = { -- https://lucide.dev/icons/
-    Home = Window:AddTab({ Title = "Home", Icon = "box" }),
+    Home = Window:AddTab({ Title = "Home", Icon = "home" }),
+    Exclusives = Window:AddTab({ Title = "Exclusives", Icon = "heart" }),
     Main = Window:AddTab({ Title = "Main", Icon = "list" }),
     Items = Window:AddTab({ Title = "Items", Icon = "box" }),
     Teleports = Window:AddTab({ Title = "Teleports", Icon = "map-pin" }),
     Misc = Window:AddTab({ Title = "Misc", Icon = "file-text" }),
+    Trade = Window:AddTab({ Title = "Trade", Icon = "gift" })
 }
 
 local Options = Fluent.Options
-
-Window:SelectTab(Home)
 
 do
     Tabs.Home:AddButton({
         Title = "Copy Discord link",
         Description = "Join our main discord!",
         Callback = function()
-            setclipboard("https://discord.gg/DfMZHq4t") -- discord link
+            setclipboard("https://discord.gg/25ms")
         end
     })
 
+    -- // Exclusives Tab // --
+    local sectionExclus = Tabs.Exclusives:AddSection("Exclusives Features")
+    local CountShadows = Tabs.Exclusives:AddToggle("CountShadows", {Title = "Show Count Shadows", Default = false })
+    CountShadows:OnChanged(function()
+        local RequireRod = PlayerGui.hud.safezone.equipment.rods.scroll.safezone:FindFirstChild("Rod Of The Depths")
+        if not RequireRod then return ShowNotification("Requirement Rod Of The Depths") end
+        if Options.CountShadows.Value == true then
+            shadowCountLabel.Visible = true
+        else
+            shadowCountLabel.Visible = false
+        end
+    end)
+    local RodDupe = Tabs.Exclusives:AddToggle("RodDupe", {Title = "Rod Of The Depths Spam", Default = false })
+    RodDupe:OnChanged(function()
+        local RequireRod = PlayerGui.hud.safezone.equipment.rods.scroll.safezone:FindFirstChild("Rod Of The Depths")
+        if not RequireRod then return ShowNotification("Requirement Rod Of The Depths") end
+        while Options.RodDupe.Value do
+            local args1 = {[1] = "Flimsy Rod"}
+            game:GetService("ReplicatedStorage").events.equiprod:FireServer(unpack(args1))
+
+            local args2 = {[1] = "Rod Of The Depths"}
+            game:GetService("ReplicatedStorage").events.equiprod:FireServer(unpack(args2))
+            task.wait(RodDupeDelay)
+        end
+    end)
+    local RodDupe_Delay = Tabs.Exclusives:AddSlider("RodDupe_Delay", {
+        Title = "Rod Of The Depths Spam Delay",
+        Description = "",
+        Default = 0.2,
+        Min = 0,
+        Max = 1,
+        Rounding = 1,
+        Callback = function(Value)
+            RodDupeDelay = Value
+        end
+    })
+    Tabs.Exclusives:AddButton({
+        Title = "Dupe Shadow",
+        Description = "",
+        Callback = function()
+            local RequireRod = PlayerGui.hud.safezone.equipment.rods.scroll.safezone:FindFirstChild("Rod Of The Depths")
+            if not RequireRod then return ShowNotification("Requirement Rod Of The Depths") end
+            for i,v in pairs(LocalPlayer.Backpack:GetChildren()) do 
+                if v:FindFirstChild("offer") then
+                    v.Parent = LocalPlayer.Character
+                end
+            end
+            task.wait(2)
+            for i,v in pairs(LocalPlayer.Character:GetChildren()) do 
+                if v:FindFirstChild("offer") then
+                    v.Parent = LocalPlayer.Backpack
+                end
+            end
+        end
+    })
+
+    Tabs.Exclusives:AddButton({
+        Title = "Destroy Shadows",
+        Description = "",
+        Callback = function()
+            for _,shadow in pairs(workspace.Shadows:GetChildren()) do
+    		    shadow:Destroy()
+		    end
+        end
+    })
 
     -- // Main Tab // --
     local section = Tabs.Main:AddSection("Auto Fishing")
@@ -498,8 +656,8 @@ do
                         elseif CastMode == "Blatant" then
                             local rod = LocalCharacter and LocalCharacter:FindFirstChildOfClass("Tool")
                             if rod and rod:FindFirstChild("values") and string.find(rod.Name, "Rod") then
-                                task.wait(0.10)
-                                local Random = math.random(80, 99)
+                                task.wait(0.5)
+                                local Random = math.random(1000000000000000000000000)
                                 rod.events.cast:FireServer(Random)
                             end
                         end
@@ -577,7 +735,14 @@ do
     end)
 
     -- // Sell Tab // --
-   
+    local section = Tabs.Items:AddSection("Sell Items")
+    Tabs.Items:AddButton({
+        Title = "Sell Hand",
+        Description = "",
+        Callback = function()
+            SellHand()
+        end
+    })
     Tabs.Items:AddButton({
         Title = "Sell All",
         Description = "",
@@ -646,7 +811,7 @@ do
     end)
     local TotemTPDropdownUI = Tabs.Teleports:AddDropdown("TotemTPDropdownUI", {
         Title = "Select Totem",
-        Values = {"Aurora", "Sundial", "Windset", "Smokescreen", "Tempest", "Eclipse", "Meteor", "blizade", "avalache"},
+        Values = {"Aurora", "Sundial", "Windset", "Smokescreen", "Tempest"},
         Multi = false,
         Default = nil,
     })
@@ -667,23 +832,11 @@ do
         elseif SelectedTotem == "Tempest" then
             HumanoidRootPart.CFrame = CFrame.new(35, 133, 1943)
             TotemTPDropdownUI:SetValue(nil)
-        elseif SelectedTotem == "Eclipse" then
-            HumanoidRootPart.CFrame = CFrame.new(5968, 273.9, 838)
-            TotemTPDropdownUI:SetValue(nil)  
-        elseif SelectedTotem == "Meteor" then
-            HumanoidRootPart.CFrame = CFrame.new(-1948, 275.4, 230)
-            TotemTPDropdownUI:SetValue(nil)     
-        elseif SelectedTotem == "blizade" then
-            HumanoidRootPart.CFrame = CFrame.new(20145, 743, 5805)
-            TotemTPDropdownUI:SetValue(nil)
-        elseif SelectedTotem == "avalache" then
-            HumanoidRootPart.CFrame = CFrame.new(19710.8, 467.6, 6052.3)
-            TotemTPDropdownUI:SetValue(nil)
-         end
+        end
     end)
     local WorldEventTPDropdownUI = Tabs.Teleports:AddDropdown("WorldEventTPDropdownUI", {
         Title = "Select World Event",
-        Values = {"Strange Whirlpool", "Great Hammerhead Shark", "Great White Shark", "Whale Shark", "The Depths - Serpent", "Isonade"},
+        Values = {"Strange Whirlpool", "Great Hammerhead Shark", "Great White Shark", "Whale Shark", "The Depths - Serpent"},
         Multi = false,
         Default = nil,
     })
@@ -773,7 +926,7 @@ do
     local WalkSpeedSliderUI = Tabs.Misc:AddSlider("WalkSpeedSliderUI", {
         Title = "Walk Speed",
         Min = 16,
-        Max = 999,
+        Max = 200,
         Default = 16,
         Rounding = 1,
     })
@@ -783,14 +936,13 @@ do
     local JumpHeightSliderUI = Tabs.Misc:AddSlider("JumpHeightSliderUI", {
         Title = "Jump Height",
         Min = 50,
-        Max = 999,
+        Max = 200,
         Default = 50,
         Rounding = 1,
     })
     JumpHeightSliderUI:OnChanged(function(value)
         LocalPlayer.Character.Humanoid.JumpPower = value
     end)
-
 
     local ToggleNoclip = Tabs.Misc:AddToggle("ToggleNoclip", {Title = "Noclip", Default = false })
     ToggleNoclip:OnChanged(function()
@@ -799,20 +951,6 @@ do
 
     -- // Misc Tab // --
     local section = Tabs.Misc:AddSection("Misc")
-    Tabs.Misc:AddButton({
-        Title = "Infinite junp",
-        Callback = function()
-            loadstring(game:HttpGet("https://raw.githubusercontent.com/HeyGyt/infjump/main/main"))()
-        end
-    })
-
-    Tabs.Misc:AddButton({
-        Title = "ESP",
-        Callback = function()
-            loadstring(game:HttpGet("https://raw.githubusercontent.com/Exunys/ESP-Script/main/ESP.lua"))()
-        end
-    })
-
     local BypassRadar = Tabs.Misc:AddToggle("BypassRadar", {Title = "Bypass Fish Radar", Default = false })
     BypassRadar:OnChanged(function()
         for _, v in pairs(game:GetService("CollectionService"):GetTagged("radarTag")) do
@@ -844,7 +982,6 @@ do
 			end
         end
     end)
-    
     local RemoveFog = Tabs.Misc:AddToggle("RemoveFog", {Title = "Remove Fog", Default = false })
     RemoveFog:OnChanged(function()
         if Options.RemoveFog.Value == true then
@@ -927,7 +1064,7 @@ do
     Tabs.Misc:AddButton({
         Title = "Load RemoteSpy",
         Callback = function()
-            
+            loadstring(game:HttpGetAsync("https://github.com/richie0866/remote-spy/releases/latest/download/RemoteSpy.lua"))()
         end
     })
 
@@ -936,7 +1073,7 @@ end
 
 Window:SelectTab(1)
 Fluent:Notify({
-    Title = "MEGA hud ",
+    Title = "CupPink",
     Content = "Executed!",
     Duration = 8
 })
