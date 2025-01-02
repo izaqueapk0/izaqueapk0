@@ -645,7 +645,7 @@ do
             end)
         end
     end)
-    local TotemTPDropdownUI = Tabs.Teleports:AddDropdown("TotemTPDropdownUI", {
+    local TotemTPDropdownUI = Tabs.Items:AddDropdown("TotemTPDropdownUI", {
         Title = "Select Totem",
         Values = {"Aurora", "Sundial", "Windset", "Smokescreen", "Tempest", "Eclipse", "Meteor", "blizade", "avalache"},
         Multi = false,
@@ -779,13 +779,6 @@ do
 
     -- // Misc Tab // --
     local section = Tabs.Misc:AddSection("Misc")
-    local section = Tabs.Misc:AddSection("Appraiser")
-    local ToggleAutoApprari = Tabs.Misc:AddToggle("ToggleAutoApprari", {Title = "Auto Appraiser", Description = "Need to hold fish and be in / near moosewood", Default = false })
-    ToggleAutoApprari:OnChanged(function()
-        AutoAppraiser = ToggleAutoApprari.Value
-        Appraise()
-    end)
-
     local BypassRadar = Tabs.Misc:AddToggle("BypassRadar", {Title = "Bypass Fish Radar", Default = false })
     BypassRadar:OnChanged(function()
         for _, v in pairs(game:GetService("CollectionService"):GetTagged("radarTag")) do
