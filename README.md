@@ -734,11 +734,11 @@ do
         end
     })
     Tabs.Teleports:AddButton({
-        Title = "Create Safe Zone",
+        Title = "fram Safe Zone",
         Callback = function()
             local SafeZone = Instance.new("Part")
             SafeZone.Size = Vector3.new(30, 1, 30)
-            SafeZone.Position = Vector3.new(math.random(-2000,2000), math.random(50000,90000), math.random(-2000,2000))
+            SafeZone.Position = Vector3.new(math.random(5821.3), math.random(131.4), math.random(399.6))
             SafeZone.Anchored = true
             SafeZone.BrickColor = BrickColor.new("Bright purple")
             SafeZone.Material = Enum.Material.ForceField
