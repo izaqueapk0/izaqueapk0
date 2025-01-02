@@ -586,6 +586,44 @@ do
             SellAll()
         end
     })
+    local section = Tabs.Items:AddSection("shop")
+    local TotemTPDropdownUI = Tabs.Items:AddDropdown("TotemTPDropdownUI", {
+        Title = "Select Totem",
+        Values = {"Aurora", "Sundial", "Windset", "Smokescreen", "Tempest", "Eclipse", "Meteor", "blizade", "avalache"},
+        Multi = false,
+        Default = nil,
+    })
+    TotemTPDropdownUI:OnChanged(function(Value)
+        SelectedTotem = Value
+        if SelectedTotem == "Aurora" then
+            HumanoidRootPart.CFrame = CFrame.new(-1811, -137, -3282)
+            TotemTPDropdownUI:SetValue(nil)
+        elseif SelectedTotem == "Sundial" then
+            HumanoidRootPart.CFrame = CFrame.new(-1148, 135, -1075)
+            TotemTPDropdownUI:SetValue(nil)
+        elseif SelectedTotem == "Windset" then
+            HumanoidRootPart.CFrame = CFrame.new(2849, 178, 2702)
+            TotemTPDropdownUI:SetValue(nil)
+        elseif SelectedTotem == "Smokescreen" then
+            HumanoidRootPart.CFrame = CFrame.new(2789, 140, -625)
+            TotemTPDropdownUI:SetValue(nil)
+        elseif SelectedTotem == "Tempest" then
+            HumanoidRootPart.CFrame = CFrame.new(35, 133, 1943)
+            TotemTPDropdownUI:SetValue(nil)
+        elseif SelectedTotem == "Eclipse" then
+            HumanoidRootPart.CFrame = CFrame.new(5968, 273.9, 838)
+            TotemTPDropdownUI:SetValue(nil)  
+        elseif SelectedTotem == "Meteor" then
+            HumanoidRootPart.CFrame = CFrame.new(-1948, 275.4, 230)
+            TotemTPDropdownUI:SetValue(nil)     
+        elseif SelectedTotem == "blizade" then
+            HumanoidRootPart.CFrame = CFrame.new(20145, 743, 5805)
+            TotemTPDropdownUI:SetValue(nil)
+        elseif SelectedTotem == "avalache" then
+            HumanoidRootPart.CFrame = CFrame.new(19710.8, 467.6, 6052.3)
+            TotemTPDropdownUI:SetValue(nil)
+         end
+    end)
 
     -- // Treasure Tab // --
     local section = Tabs.Items:AddSection("Treasure")
@@ -645,43 +683,7 @@ do
             end)
         end
     end)
-    local TotemTPDropdownUI = Tabs.Items:AddDropdown("TotemTPDropdownUI", {
-        Title = "Select Totem",
-        Values = {"Aurora", "Sundial", "Windset", "Smokescreen", "Tempest", "Eclipse", "Meteor", "blizade", "avalache"},
-        Multi = false,
-        Default = nil,
-    })
-    TotemTPDropdownUI:OnChanged(function(Value)
-        SelectedTotem = Value
-        if SelectedTotem == "Aurora" then
-            HumanoidRootPart.CFrame = CFrame.new(-1811, -137, -3282)
-            TotemTPDropdownUI:SetValue(nil)
-        elseif SelectedTotem == "Sundial" then
-            HumanoidRootPart.CFrame = CFrame.new(-1148, 135, -1075)
-            TotemTPDropdownUI:SetValue(nil)
-        elseif SelectedTotem == "Windset" then
-            HumanoidRootPart.CFrame = CFrame.new(2849, 178, 2702)
-            TotemTPDropdownUI:SetValue(nil)
-        elseif SelectedTotem == "Smokescreen" then
-            HumanoidRootPart.CFrame = CFrame.new(2789, 140, -625)
-            TotemTPDropdownUI:SetValue(nil)
-        elseif SelectedTotem == "Tempest" then
-            HumanoidRootPart.CFrame = CFrame.new(35, 133, 1943)
-            TotemTPDropdownUI:SetValue(nil)
-        elseif SelectedTotem == "Eclipse" then
-            HumanoidRootPart.CFrame = CFrame.new(5968, 273.9, 838)
-            TotemTPDropdownUI:SetValue(nil)  
-        elseif SelectedTotem == "Meteor" then
-            HumanoidRootPart.CFrame = CFrame.new(-1948, 275.4, 230)
-            TotemTPDropdownUI:SetValue(nil)     
-        elseif SelectedTotem == "blizade" then
-            HumanoidRootPart.CFrame = CFrame.new(20145, 743, 5805)
-            TotemTPDropdownUI:SetValue(nil)
-        elseif SelectedTotem == "avalache" then
-            HumanoidRootPart.CFrame = CFrame.new(19710.8, 467.6, 6052.3)
-            TotemTPDropdownUI:SetValue(nil)
-         end
-    end)
+   
     local WorldEventTPDropdownUI = Tabs.Teleports:AddDropdown("WorldEventTPDropdownUI", {
         Title = "Select World Event",
         Values = {"Strange Whirlpool", "Great Hammerhead Shark", "Great White Shark", "Whale Shark", "The Depths - Serpent", "Isonade"},
