@@ -771,7 +771,7 @@ do
     WalkOnWaterZone:OnChanged(function(Value)
         WalkZone = Value
     end)
-    
+
     local ToggleNoclip = Tabs.Misc:AddToggle("ToggleNoclip", {Title = "Noclip", Default = false })
     ToggleNoclip:OnChanged(function()
         Noclip = Options.ToggleNoclip.Value
@@ -779,19 +779,12 @@ do
 
     -- // Misc Tab // --
     local section = Tabs.Misc:AddSection("Misc")
-    Tabs.Misc:AddButton({
-        Title = "Infinite junp",
-        Callback = function()
-            loadstring(game:HttpGet("https://raw.githubusercontent.com/HeyGyt/infjump/main/main"))()
-        end
-    })
-
-    Tabs.Misc:AddButton({
-        Title = "ESP",
-        Callback = function()
-            loadstring(game:HttpGet("https://raw.githubusercontent.com/Exunys/ESP-Script/main/ESP.lua"))()
-        end
-    })
+    local section = Tabs.Misc:AddSection("Appraiser")
+    local ToggleAutoApprari = Tabs.Misc:AddToggle("ToggleAutoApprari", {Title = "Auto Appraiser", Description = "Need to hold fish and be in / near moosewood", Default = false })
+    ToggleAutoApprari:OnChanged(function()
+        AutoAppraiser = ToggleAutoApprari.Value
+        Appraise()
+    end)
 
     local BypassRadar = Tabs.Misc:AddToggle("BypassRadar", {Title = "Bypass Fish Radar", Default = false })
     BypassRadar:OnChanged(function()
@@ -901,6 +894,20 @@ do
         Description = "Chill😎",
         Callback = function()
             loadstring(game:HttpGet('https://pastebin.com/raw/zv94NGMc'))()
+        end
+    })
+
+    Tabs.Fun:AddButton({
+        Title = "Infinite junp",
+        Callback = function()
+            loadstring(game:HttpGet("https://raw.githubusercontent.com/HeyGyt/infjump/main/main"))()
+        end
+    })
+
+    Tabs.Fun:AddButton({
+        Title = "ESP",
+        Callback = function()
+            loadstring(game:HttpGet("https://raw.githubusercontent.com/Exunys/ESP-Script/main/ESP.lua"))()
         end
     })
 
