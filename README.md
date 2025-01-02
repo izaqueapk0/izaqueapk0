@@ -68,7 +68,7 @@ local Window = Fluent:CreateWindow({
     Title = game:GetService("MarketplaceService"):GetProductInfo(16732694052).Name .." | MEGA hud|",
     SubTitle = " (discord.gg/J37PW97j6a)", -- discord link
     TabWidth = 160,
-    Size = UDim2.fromOffset(600, 400),
+    Size = UDim2.fromOffset(580, 460),
     Acrylic = false, -- The blur may be detectable, setting this to false disables blur entirely
     Theme = "Dark",
     MinimizeKey = Enum.KeyCode.LeftControl -- Used when theres no MinimizeKeybind
@@ -104,7 +104,7 @@ local WaitForSomeone = RenderStepped.Wait
 
 -- // // // Variables // // // --
 local CastMode = "Blatant"
-local ShakeMode = "Mouse"
+local ShakeMode = "Navigation"
 local ReelMode = "Blatant"
 local CollectMode = "Teleports"
 local teleportSpots = {}
@@ -447,11 +447,10 @@ end)
 
 local Tabs = { -- https://lucide.dev/icons/
     Home = Window:AddTab({ Title = "Home", Icon = "box" }),
-    Main = Window:AddTab({ Title = "Main", Icon = "code" }),
+    Main = Window:AddTab({ Title = "Main", Icon = "list" }),
+    Items = Window:AddTab({ Title = "Items", Icon = "ayers" }),
     Teleports = Window:AddTab({ Title = "Teleports", Icon = "map-pin" }),
     Misc = Window:AddTab({ Title = "Misc", Icon = "file-text" }),
-    Items = Window:AddTab({ Title = "Items", Icon = "box" }),
-    Fun = Window:AddTab({ Title = "Fun", Icon = "coffee" }),
 }
 
 local Options = Fluent.Options
@@ -499,7 +498,7 @@ do
                         elseif CastMode == "Blatant" then
                             local rod = LocalCharacter and LocalCharacter:FindFirstChildOfClass("Tool")
                             if rod and rod:FindFirstChild("values") and string.find(rod.Name, "Rod") then
-                                task.wait(0.2)
+                                task.wait(0.5)
                                 local Random = math.random(90, 99)
                                 rod.events.cast:FireServer(Random)
                             end
@@ -586,44 +585,6 @@ do
             SellAll()
         end
     })
-    local section = Tabs.Items:AddSection("shop")
-    local TotemTPDropdownUI = Tabs.Items:AddDropdown("TotemTPDropdownUI", {
-        Title = "Select Totem",
-        Values = {"Aurora", "Sundial", "Windset", "Smokescreen", "Tempest", "Eclipse", "Meteor", "blizade", "avalache"},
-        Multi = false,
-        Default = nil,
-    })
-    TotemTPDropdownUI:OnChanged(function(Value)
-        SelectedTotem = Value
-        if SelectedTotem == "Aurora" then
-            HumanoidRootPart.CFrame = CFrame.new(-1811, -137, -3282)
-            TotemTPDropdownUI:SetValue(nil)
-        elseif SelectedTotem == "Sundial" then
-            HumanoidRootPart.CFrame = CFrame.new(-1148, 135, -1075)
-            TotemTPDropdownUI:SetValue(nil)
-        elseif SelectedTotem == "Windset" then
-            HumanoidRootPart.CFrame = CFrame.new(2849, 178, 2702)
-            TotemTPDropdownUI:SetValue(nil)
-        elseif SelectedTotem == "Smokescreen" then
-            HumanoidRootPart.CFrame = CFrame.new(2789, 140, -625)
-            TotemTPDropdownUI:SetValue(nil)
-        elseif SelectedTotem == "Tempest" then
-            HumanoidRootPart.CFrame = CFrame.new(35, 133, 1943)
-            TotemTPDropdownUI:SetValue(nil)
-        elseif SelectedTotem == "Eclipse" then
-            HumanoidRootPart.CFrame = CFrame.new(5968, 273.9, 838)
-            TotemTPDropdownUI:SetValue(nil)  
-        elseif SelectedTotem == "Meteor" then
-            HumanoidRootPart.CFrame = CFrame.new(-1948, 275.4, 230)
-            TotemTPDropdownUI:SetValue(nil)     
-        elseif SelectedTotem == "blizade" then
-            HumanoidRootPart.CFrame = CFrame.new(20145, 743, 5805)
-            TotemTPDropdownUI:SetValue(nil)
-        elseif SelectedTotem == "avalache" then
-            HumanoidRootPart.CFrame = CFrame.new(19710.8, 467.6, 6052.3)
-            TotemTPDropdownUI:SetValue(nil)
-         end
-    end)
 
     -- // Treasure Tab // --
     local section = Tabs.Items:AddSection("Treasure")
@@ -683,7 +644,43 @@ do
             end)
         end
     end)
-   
+    local TotemTPDropdownUI = Tabs.Teleports:AddDropdown("TotemTPDropdownUI", {
+        Title = "Select Totem",
+        Values = {"Aurora", "Sundial", "Windset", "Smokescreen", "Tempest", "Eclipse", "Meteor", "blizade", "avalache"},
+        Multi = false,
+        Default = nil,
+    })
+    TotemTPDropdownUI:OnChanged(function(Value)
+        SelectedTotem = Value
+        if SelectedTotem == "Aurora" then
+            HumanoidRootPart.CFrame = CFrame.new(-1811, -137, -3282)
+            TotemTPDropdownUI:SetValue(nil)
+        elseif SelectedTotem == "Sundial" then
+            HumanoidRootPart.CFrame = CFrame.new(-1148, 135, -1075)
+            TotemTPDropdownUI:SetValue(nil)
+        elseif SelectedTotem == "Windset" then
+            HumanoidRootPart.CFrame = CFrame.new(2849, 178, 2702)
+            TotemTPDropdownUI:SetValue(nil)
+        elseif SelectedTotem == "Smokescreen" then
+            HumanoidRootPart.CFrame = CFrame.new(2789, 140, -625)
+            TotemTPDropdownUI:SetValue(nil)
+        elseif SelectedTotem == "Tempest" then
+            HumanoidRootPart.CFrame = CFrame.new(35, 133, 1943)
+            TotemTPDropdownUI:SetValue(nil)
+        elseif SelectedTotem == "Eclipse" then
+            HumanoidRootPart.CFrame = CFrame.new(5968, 273.9, 838)
+            TotemTPDropdownUI:SetValue(nil)  
+        elseif SelectedTotem == "Meteor" then
+            HumanoidRootPart.CFrame = CFrame.new(-1948, 275.4, 230)
+            TotemTPDropdownUI:SetValue(nil)     
+        elseif SelectedTotem == "blizade" then
+            HumanoidRootPart.CFrame = CFrame.new(20145, 743, 5805)
+            TotemTPDropdownUI:SetValue(nil)
+        elseif SelectedTotem == "avalache" then
+            HumanoidRootPart.CFrame = CFrame.new(19710.8, 467.6, 6052.3)
+            TotemTPDropdownUI:SetValue(nil)
+         end
+    end)
     local WorldEventTPDropdownUI = Tabs.Teleports:AddDropdown("WorldEventTPDropdownUI", {
         Title = "Select World Event",
         Values = {"Strange Whirlpool", "Great Hammerhead Shark", "Great White Shark", "Whale Shark", "The Depths - Serpent", "Isonade"},
@@ -734,11 +731,11 @@ do
         end
     })
     Tabs.Teleports:AddButton({
-        Title = "fram Safe Zone",
+        Title = "Create Safe Zone",
         Callback = function()
             local SafeZone = Instance.new("Part")
             SafeZone.Size = Vector3.new(30, 1, 30)
-            SafeZone.Position = Vector3.new(math.random(5821.3), math.random(131.4), math.random(399.6))
+            SafeZone.Position = Vector3.new(math.random(-2000,2000), math.random(50000,90000), math.random(-2000,2000))
             SafeZone.Anchored = true
             SafeZone.BrickColor = BrickColor.new("Bright purple")
             SafeZone.Material = Enum.Material.ForceField
@@ -773,11 +770,33 @@ do
     WalkOnWaterZone:OnChanged(function(Value)
         WalkZone = Value
     end)
-    
+    local WalkSpeedSliderUI = Tabs.Misc:AddSlider("WalkSpeedSliderUI", {
+        Title = "Walk Speed",
+        Min = 16,
+        Max = 999,
+        Default = 16,
+        Rounding = 1,
+    })
+    WalkSpeedSliderUI:OnChanged(function(value)
+        LocalPlayer.Character.Humanoid.WalkSpeed = value
+    end)
+    local JumpHeightSliderUI = Tabs.Misc:AddSlider("JumpHeightSliderUI", {
+        Title = "Jump Height",
+        Min = 50,
+        Max = 999,
+        Default = 50,
+        Rounding = 1,
+    })
+    JumpHeightSliderUI:OnChanged(function(value)
+        LocalPlayer.Character.Humanoid.JumpPower = value
+    end)
+
+
     local ToggleNoclip = Tabs.Misc:AddToggle("ToggleNoclip", {Title = "Noclip", Default = false })
     ToggleNoclip:OnChanged(function()
         Noclip = Options.ToggleNoclip.Value
     end)
+
 
     -- // Misc Tab // --
     local section = Tabs.Misc:AddSection("Misc")
@@ -812,7 +831,6 @@ do
 			end
         end
     end)
-    
     local RemoveFog = Tabs.Misc:AddToggle("RemoveFog", {Title = "Remove Fog", Default = false })
     RemoveFog:OnChanged(function()
         if Options.RemoveFog.Value == true then
@@ -883,101 +901,6 @@ do
             task.wait(0.01)
         end
     end)
-
-    Tabs.Fun:AddButton({
-        Title = "Radio UI",
-        Description = "Chill😎",
-        Callback = function()
-            loadstring(game:HttpGet('https://pastebin.com/raw/zv94NGMc'))()
-        end
-    })
-
-    Tabs.Fun:AddButton({
-        Title = "Infinite junp",
-        Callback = function()
-            loadstring(game:HttpGet("https://raw.githubusercontent.com/HeyGyt/infjump/main/main"))()
-        end
-    })
-
-    Tabs.Fun:AddButton({
-        Title = "ESP",
-        Callback = function()
-            loadstring(game:HttpGet("https://raw.githubusercontent.com/Exunys/ESP-Script/main/ESP.lua"))()
-        end
-    })
-
-    local section = Tabs.Fun:AddSection("Player")
-
-    local ToggleWalkspeed = Tabs.Fun:AddToggle("Walk Speed", {Title = "Walk Speed", Default = false })
-    local defaultWalkSpeed = game.Players.LocalPlayer.Character.Humanoid.WalkSpeed
-    
-    local Input = Tabs.Fun:AddInput("Speed", {
-        Title = "Speed",
-        Default = "16",
-        Placeholder = "Enter walk speed",
-        Numeric = true,
-        Finished = false,
-        Callback = function(Value)
-        end
-    })
-    
-    Input.OnChanged = function()
-        if ToggleWalkspeed:Get() then
-            local speedValue = Input.Value
-            if tonumber(speedValue) then
-                game.Players.LocalPlayer.Character.Humanoid.WalkSpeed = tonumber(speedValue)
-            end
-        end
-    end
-    
-    ToggleWalkspeed:OnChanged(function(State)
-        if State then
-            local speedValue = Input.Value
-            if speedValue and tonumber(speedValue) then
-                game.Players.LocalPlayer.Character.Humanoid.WalkSpeed = tonumber(speedValue)
-            else
-                game.Players.LocalPlayer.Character.Humanoid.WalkSpeed = 16
-            end
-        else
-            game.Players.LocalPlayer.Character.Humanoid.WalkSpeed = defaultWalkSpeed
-        end
-    end)
-    
-    local ToggleJumpPower = Tabs.Fun:AddToggle("Jump Power", {Title = "Jump Power", Default = false })
-    local defaultJumpPower = game.Players.LocalPlayer.Character.Humanoid.JumpPower
-    
-    local InputJump = Tabs.Fun:AddInput("Power", {
-        Title = "Power",
-        Default = "50",
-        Placeholder = "Enter jump power",
-        Numeric = true,
-        Finished = false,
-        Callback = function(Value)
-        end
-    })
-    
-    InputJump.OnChanged = function()
-        if ToggleJumpPower:Get() then
-            local jumpValue = InputJump.Value
-            if tonumber(jumpValue) then
-                game.Players.LocalPlayer.Character.Humanoid.JumpPower = tonumber(jumpValue)
-            end
-        end
-    end
-    
-    ToggleJumpPower:OnChanged(function(State)
-        if State then
-            local jumpValue = InputJump.Value
-            if jumpValue and tonumber(jumpValue) then
-                game.Players.LocalPlayer.Character.Humanoid.JumpPower = tonumber(jumpValue)
-            else
-                game.Players.LocalPlayer.Character.Humanoid.JumpPower = 50
-            end
-        else
-            game.Players.LocalPlayer.Character.Humanoid.JumpPower = defaultJumpPower
-        end
-    end)
-
 
     -- // Load Tab // --
     local section = Tabs.Misc:AddSection("Load Scripts")
