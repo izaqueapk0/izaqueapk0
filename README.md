@@ -451,7 +451,7 @@ local Tabs = { -- https://lucide.dev/icons/
     Teleports = Window:AddTab({ Title = "Teleports", Icon = "map-pin" }),
     Misc = Window:AddTab({ Title = "Misc", Icon = "file-text" }),
     Items = Window:AddTab({ Title = "Items", Icon = "box" }),
-    player = Window:AddTab({ Title = "player", Icon = "coffee" }),
+    fun = Window:AddTab({ Title = "fun", Icon = "coffee" }),
 }
 
 local Options = Fluent.Options
@@ -889,7 +889,7 @@ do
         end
     end)
 
-    Tabs.player:AddButton({
+    Tabs.Fun:AddButton({
         Title = "Radio UI",
         Description = "Chill😎",
         Callback = function()
@@ -897,12 +897,12 @@ do
         end
     })
 
-    local section = Tabs.player:AddSection("Player")
+    local section = Tabs.Fun:AddSection("Player")
 
     local ToggleWalkspeed = Tabs.Fun:AddToggle("Walk Speed", {Title = "Walk Speed", Default = false })
     local defaultWalkSpeed = game.Players.LocalPlayer.Character.Humanoid.WalkSpeed
     
-    local Input = Tabs.player:AddInput("Speed", {
+    local Input = Tabs.Fun:AddInput("Speed", {
         Title = "Speed",
         Default = "16",
         Placeholder = "Enter walk speed",
@@ -934,7 +934,7 @@ do
         end
     end)
     
-    local ToggleJumpPower = Tabs.player:AddToggle("Jump Power", {Title = "Jump Power", Default = false })
+    local ToggleJumpPower = Tabs.Fun:AddToggle("Jump Power", {Title = "Jump Power", Default = false })
     local defaultJumpPower = game.Players.LocalPlayer.Character.Humanoid.JumpPower
     
     local InputJump = Tabs.Fun:AddInput("Power", {
