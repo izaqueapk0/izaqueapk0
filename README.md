@@ -773,6 +773,27 @@ do
     WalkOnWaterZone:OnChanged(function(Value)
         WalkZone = Value
     end)
+    local WalkSpeedSliderUI = Tabs.Misc:AddToggle("WalkSpeedSliderUI", {
+        Title = "Walk Speed",
+        Min = 16,
+        Max = 999,
+        Default = 16,
+        Rounding = 1,
+    })
+    WalkSpeedSliderUI:OnChanged(function(value)
+        LocalPlayer.Character.Humanoid.WalkSpeed = value
+    end)
+    local JumpHeightSliderUI = Tabs.Misc:AddToggle("JumpHeightSliderUI", {
+        Title = "Jump Height",
+        Min = 50,
+        Max = 999,
+        Default = 50,
+        Rounding = 1,
+    })
+    JumpHeightSliderUI:OnChanged(function(value)
+        LocalPlayer.Character.Humanoid.JumpPower = value
+    end)
+
 
     local ToggleNoclip = Tabs.Misc:AddToggle("ToggleNoclip", {Title = "Noclip", Default = false })
     ToggleNoclip:OnChanged(function()
