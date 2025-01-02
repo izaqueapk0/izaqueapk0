@@ -68,7 +68,7 @@ local Window = Fluent:CreateWindow({
     Title = game:GetService("MarketplaceService"):GetProductInfo(16732694052).Name .." | MEGA hud|",
     SubTitle = " (discord.gg/J37PW97j6a)", -- discord link
     TabWidth = 160,
-    Size = UDim2.fromOffset(580, 460),
+    Size = UDim2.fromOffset(600, 400),
     Acrylic = false, -- The blur may be detectable, setting this to false disables blur entirely
     Theme = "Dark",
     MinimizeKey = Enum.KeyCode.LeftControl -- Used when theres no MinimizeKeybind
@@ -447,10 +447,11 @@ end)
 
 local Tabs = { -- https://lucide.dev/icons/
     Home = Window:AddTab({ Title = "Home", Icon = "box" }),
-    Main = Window:AddTab({ Title = "Main", Icon = "list" }),
-    Items = Window:AddTab({ Title = "Items", Icon = "box" }),
+    Main = Window:AddTab({ Title = "Main", Icon = "code" }),
     Teleports = Window:AddTab({ Title = "Teleports", Icon = "map-pin" }),
     Misc = Window:AddTab({ Title = "Misc", Icon = "file-text" }),
+    Items = Window:AddTab({ Title = "Items", Icon = "box" }),
+    player = Window:AddTab({ Title = "player", Icon = "coffee" }),
 }
 
 local Options = Fluent.Options
@@ -887,6 +888,87 @@ do
             task.wait(0.01)
         end
     end)
+
+    Tabs.player:AddButton({
+        Title = "Radio UI",
+        Description = "Chill😎",
+        Callback = function()
+            loadstring(game:HttpGet('https://pastebin.com/raw/zv94NGMc'))()
+        end
+    })
+
+    local section = Tabs.player:AddSection("Player")
+
+    local ToggleWalkspeed = Tabs.Fun:AddToggle("Walk Speed", {Title = "Walk Speed", Default = false })
+    local defaultWalkSpeed = game.Players.LocalPlayer.Character.Humanoid.WalkSpeed
+    
+    local Input = Tabs.player:AddInput("Speed", {
+        Title = "Speed",
+        Default = "16",
+        Placeholder = "Enter walk speed",
+        Numeric = true,
+        Finished = false,
+        Callback = function(Value)
+        end
+    })
+    
+    Input.OnChanged = function()
+        if ToggleWalkspeed:Get() then
+            local speedValue = Input.Value
+            if tonumber(speedValue) then
+                game.Players.LocalPlayer.Character.Humanoid.WalkSpeed = tonumber(speedValue)
+            end
+        end
+    end
+    
+    ToggleWalkspeed:OnChanged(function(State)
+        if State then
+            local speedValue = Input.Value
+            if speedValue and tonumber(speedValue) then
+                game.Players.LocalPlayer.Character.Humanoid.WalkSpeed = tonumber(speedValue)
+            else
+                game.Players.LocalPlayer.Character.Humanoid.WalkSpeed = 16
+            end
+        else
+            game.Players.LocalPlayer.Character.Humanoid.WalkSpeed = defaultWalkSpeed
+        end
+    end)
+    
+    local ToggleJumpPower = Tabs.player:AddToggle("Jump Power", {Title = "Jump Power", Default = false })
+    local defaultJumpPower = game.Players.LocalPlayer.Character.Humanoid.JumpPower
+    
+    local InputJump = Tabs.Fun:AddInput("Power", {
+        Title = "Power",
+        Default = "50",
+        Placeholder = "Enter jump power",
+        Numeric = true,
+        Finished = false,
+        Callback = function(Value)
+        end
+    })
+    
+    InputJump.OnChanged = function()
+        if ToggleJumpPower:Get() then
+            local jumpValue = InputJump.Value
+            if tonumber(jumpValue) then
+                game.Players.LocalPlayer.Character.Humanoid.JumpPower = tonumber(jumpValue)
+            end
+        end
+    end
+    
+    ToggleJumpPower:OnChanged(function(State)
+        if State then
+            local jumpValue = InputJump.Value
+            if jumpValue and tonumber(jumpValue) then
+                game.Players.LocalPlayer.Character.Humanoid.JumpPower = tonumber(jumpValue)
+            else
+                game.Players.LocalPlayer.Character.Humanoid.JumpPower = 50
+            end
+        else
+            game.Players.LocalPlayer.Character.Humanoid.JumpPower = defaultJumpPower
+        end
+    end)
+
 
     -- // Load Tab // --
     local section = Tabs.Misc:AddSection("Load Scripts")
