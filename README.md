@@ -762,9 +762,16 @@ do
 			end
 		end
     end)
-  
-
-
+    local WalkOnWaterZone = Tabs.Misc:AddDropdown("WalkOnWaterZone", {
+        Title = "Walk On Water Zone",
+        Values = {"Ocean", "Desolate Deep", "The Depths"},
+        Multi = false,
+        Default = "Ocean",
+    })
+    WalkOnWaterZone:OnChanged(function(Value)
+        WalkZone = Value
+    end)
+    
     local ToggleNoclip = Tabs.Misc:AddToggle("ToggleNoclip", {Title = "Noclip", Default = false })
     ToggleNoclip:OnChanged(function()
         Noclip = Options.ToggleNoclip.Value
