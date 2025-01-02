@@ -625,6 +625,56 @@ do
          end
     end)
 
+    local TotemTPDropdownUI = Tabs.Items:AddDropdown("itens_rod", {
+        Title = "Select rod",
+        Values = {"Training_Rod", "Plastic_Rod", "Lucky_Rod", "Nocturnal_Rod", "Kings_Rod", "Flimsy_Rod", "Fast_Rod", "Carbon_Rod", "Long_Rod", "Mythical_Rod", "Midas_Rod", "Trident_Rod", "wilsons_rod" },
+        Multi = false,
+        Default = nil,
+    })
+    itens_rod:OnChanged(function(Value)
+        SelectedTotem = Value
+        if SelectedTotem == "Training_Rod" then
+            HumanoidRootPart.CFrame = CFrame.new(457.693848, 148.357529, 230.414307, 1, -0, 0, 0, 0.975410998, 0.220393807, -0, -0.220393807, 0.975410998),
+            itens_rod:SetValue(nil)
+        elseif SelectedTotem == "Plastic_Rod" then
+            HumanoidRootPart.CFrame = CFrame.new(454.425385, 148.169739, 229.172424, 0.951755166, 0.0709736273, -0.298537821, -3.42726707e-07, 0.972884834, 0.231290117, 0.306858391, -0.220131472, 0.925948203),
+            itens_rodI:SetValue(nil)
+        elseif SelectedTotem == "Lucky_Rod" then
+            HumanoidRootPart.CFrame = CFrame.new(446.085999, 148.253006, 222.160004, 0.974526405, -0.22305499, 0.0233404674, 0.196993902, 0.901088715, 0.386306256, -0.107199371, -0.371867687, 0.922075212),
+            itens_rod:SetValue(nil)
+        elseif SelectedTotem == "Nocturnal_Rod" then
+            HumanoidRootPart.CFrame = CFrame.new(-141.874237, -515.313538, 1139.04529, 0.161644459, -0.98684907, 1.87754631e-05, 1.87754631e-05, 2.21133232e-05, 1, -0.98684907, -0.161644459, 2.21133232e-05),
+            itens_rod:SetValue(nil)
+        elseif SelectedTotem == "Kings_Rod" then
+            HumanoidRootPart.CFrame = CFrame.new(1375.57642, -810.201721, -303.509247, -0.7490201, 0.662445903, -0.0116144121, -0.0837960541, -0.0773290396, 0.993478119, 0.657227278, 0.745108068, 0.113431036),
+            itens_rod:SetValue(nil)
+        elseif SelectedTotem == "Flimsy_Rod" then
+            HumanoidRootPart.CFrame = CFrame.new(471.107697, 148.36171, 229.642441, 0.841614008, 0.0774728209, -0.534493923, 0.00678436086, 0.988063335, 0.153898612, 0.540036798, -0.13314943, 0.831042409),
+            itens_rod:SetValue(nil)  
+        elseif SelectedTotem == "Fast_Rod" then
+            HumanoidRootPart.CFrame =  CFrame.new(447.183563, 148.225739, 220.187454, 0.981104493, 1.26492232e-05, 0.193478703, -0.0522461236, 0.962867677, 0.264870107, -0.186291039, -0.269973755, 0.944674432),
+            itens_rod:SetValue(nil)     
+        elseif SelectedTotem == "Carbon_Rod" then
+            HumanoidRootPart.CFrame = CFrame.new(454.083618, 150.590073, 225.328827, 0.985374212, -0.170404434, 1.41561031e-07, 1.41561031e-07, 1.7285347e-06, 1, -0.170404434, -0.985374212, 1.7285347e-06),
+            itens_rodI:SetValue(nil)
+        elseif SelectedTotem == "Long_Rod" then
+            HumanoidRootPart.CFrame =CFrame.new(485.695038, 171.656326, 145.746109, -0.630167365, -0.776459217, -5.33461571e-06, 5.33461571e-06, -1.12056732e-05, 1, -0.776459217, 0.630167365, 1.12056732e-05),
+            itens_rod:SetValue(nil)
+        elseif SelectedTotem == "Mythical_Rod" then
+            HumanoidRootPart.CFrame = CFrame.new(389.716705, 132.588821, 314.042847, 0, 1, 0, 0, 0, -1, -1, 0, 0),
+            itens_rod:SetValue(nil)
+        elseif SelectedTotem == "Midas_Rod" then
+            HumanoidRootPart.CFrame = CFrame.new(401.981659, 133.258316, 326.325745, 0.16456604, 0.986365497, 0.00103566051, 0.00017541647, 0.00102066994, -0.999999464, -0.986366034, 0.1645661, -5.00679016e-06),
+            itens_rod:SetValue(nil)
+        elseif SelectedTotem == "Trident_Rod" then
+            HumanoidRootPart.CFrame = CFrame.new(-1484.34192, -222.325562, -2194.77002, -0.466092706, -0.536795318, 0.703284025, -0.319611132, 0.843386114, 0.43191275, -0.824988723, -0.0234660208, -0.56466186),
+            itens_rod:SetValue(nil)
+        elseif SelectedTotem == "wilsons_rod" then
+            HumanoidRootPart.CFrame = CFrame.new(2879.2085, 135.07663, 2723.64233, 0.970463336, -0.168695927, -0.172460333, 0.141582936, -0.180552125, 0.973321974, -0.195333466, -0.968990743, -0.151334763)
+            itens_rod:SetValue(nil)
+         end
+    end)
+
     -- // Treasure Tab // --
     local section = Tabs.Items:AddSection("Treasure")
     Tabs.Items:AddButton({
@@ -773,28 +823,7 @@ do
     WalkOnWaterZone:OnChanged(function(Value)
         WalkZone = Value
     end)
-    local WalkSpeedSliderUI = Tabs.Misc:AddToggle("WalkSpeedSliderUI", {
-        Title = "Walk Speed",
-        Min = 16,
-        Max = 999,
-        Default = 16,
-        Rounding = 1,
-    })
-    WalkSpeedSliderUI:OnChanged(function(value)
-        LocalPlayer.Character.Humanoid.WalkSpeed = value
-    end)
-    local JumpHeightSliderUI = Tabs.Misc:AddToggle("JumpHeightSliderUI", {
-        Title = "Jump Height",
-        Min = 50,
-        Max = 999,
-        Default = 50,
-        Rounding = 1,
-    })
-    JumpHeightSliderUI:OnChanged(function(value)
-        LocalPlayer.Character.Humanoid.JumpPower = value
-    end)
-
-
+    
     local ToggleNoclip = Tabs.Misc:AddToggle("ToggleNoclip", {Title = "Noclip", Default = false })
     ToggleNoclip:OnChanged(function()
         Noclip = Options.ToggleNoclip.Value
