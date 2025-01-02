@@ -451,7 +451,7 @@ local Tabs = { -- https://lucide.dev/icons/
     Teleports = Window:AddTab({ Title = "Teleports", Icon = "map-pin" }),
     Misc = Window:AddTab({ Title = "Misc", Icon = "file-text" }),
     Items = Window:AddTab({ Title = "Items", Icon = "box" }),
-    fun = Window:AddTab({ Title = "fun", Icon = "coffee" }),
+    Fun = Window:AddTab({ Title = "Fun", Icon = "coffee" }),
 }
 
 local Options = Fluent.Options
