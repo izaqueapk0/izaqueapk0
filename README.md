@@ -907,7 +907,31 @@ do
     })
 
     local section = Tabs.Fun:AddSection("Player")
-
+    local WalkOnWater = Tabs.Fun:AddToggle("WalkOnWater", {Title = "Walk On Water", Default = false })
+    WalkOnWater:OnChanged(function()
+        for i,v in pairs(workspace.zones.fishing:GetChildren()) do
+			if v.Name == WalkZone then
+				v.CanCollide = Options.WalkOnWater.Value
+                if v.Name == "Ocean" then
+                    for i,v in pairs(workspace.zones.fishing:GetChildren()) do
+                        if v.Name == "Deep Ocean" then
+                            v.CanCollide = Options.WalkOnWater.Value
+                        end
+                    end
+                end
+			end
+		end
+    end)
+    local WalkOnWaterZone = Tabs.Fun:AddDropdown("WalkOnWaterZone", {
+        Title = "Walk On Water Zone",
+        Values = {"Ocean", "Desolate Deep", "The Depths"},
+        Multi = false,
+        Default = "Ocean",
+    })
+    WalkOnWaterZone:OnChanged(function(Value)
+        WalkZone = Value
+    end)
+    
     local ToggleWalkspeed = Tabs.Fun:AddToggle("Walk Speed", {Title = "Walk Speed", Default = false })
     local defaultWalkSpeed = game.Players.LocalPlayer.Character.Humanoid.WalkSpeed
     
@@ -978,36 +1002,7 @@ do
         end
     end)
 
-    local section = Tabs.Misc:AddSection("Scripts")
-    local loopEnabled = false
-local function resizeButtonLoop()
-    while loopEnabled do
-        local buttonPath = game:GetService("Players").LocalPlayer:FindFirstChild("PlayerGui")
-            and game.Players.LocalPlayer.PlayerGui:FindFirstChild("shakeui")
-            and game.Players.LocalPlayer.PlayerGui.shakeui:FindFirstChild("safezone")
-            and game.Players.LocalPlayer.PlayerGui.shakeui.safezone:FindFirstChild("button")
 
-        if buttonPath then
-            buttonPath.Size = UDim2.new(0, 2000, 0, 2000)
-            buttonPath.BackgroundTransparency = 1
-        else
-            print("did not find a button in the path!?!?")
-        end
-        wait(0.01)
-    end
-end
-
-FishingTab:CreateToggle({
-   Name = "change shake size",
-   CurrentValue = false,
-   Flag = "ToggleResize",
-   Callback = function(Value)
-       loopEnabled = Value
-       if loopEnabled then
-           resizeButtonLoop()
-       end
-   end,
-})
     -- // Load Tab // --
     local section = Tabs.Misc:AddSection("Load Scripts")
     Tabs.Misc:AddButton({
