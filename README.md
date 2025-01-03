@@ -1,118 +1,142 @@
-local OrionLib = loadstring(game:HttpGet(('https://raw.githubusercontent.com/shlexware/Orion/main/source')))()
+local library = loadstring(game:HttpGet("https://raw.githubusercontent.com/Turtle-Brand/Turtle-Lib/main/source.lua"))()
 
-OrionLib:MakeNotification({
-	Name = "Hi rei made this",
-	Content = "k LIAR",
-	Image = "rbxassetid://4483345998",
-	Time = 5
-})
+local window = library:Window("FISCH AUTO FARM")
 
+window:Button("Enable Auto Farm", function()
+ local Players = game:GetService('Players')
+local CoreGui = game:GetService('StarterGui')
+local GuiService = game:GetService('GuiService')
+local ReplicatedStorage = game:GetService('ReplicatedStorage')
+local ContextActionService = game:GetService('ContextActionService')
+local VirtualInputManager = game:GetService('VirtualInputManager')
+local UserInputService = game:GetService('UserInputService')
 
-local Window = OrionLib:MakeWindow({Name = "Shalom!", HidePremium = false, SaveConfig = true, ConfigFolder = "Orion"})
+local LocalPlayer = Players.LocalPlayer
 
---Player Tab--
+local Enabled = false
+local Rod = false
+local Casted = false
+local Progress = false
+local Finished = false
 
-local PlayerTab = Window:MakeTab({
-	Name = "Fishy",
-	Icon = "rbxassetid://4483345998",
-	PremiumOnly = false
-})
+local LoopPosition
 
-local PlayerSection = PlayerTab:AddSection({
-	Name = "Fishy"
-})
+local Keybind = Enum.KeyCode.X
 
-
-PlayerSection:AddButton({
-	Name = "Cast Auto (click when fish caught)",
-	Callback = function(Value)
-local player = game.Players.LocalPlayer
-local playerGui = player:WaitForChild("PlayerGui")
-
-local reel = playerGui:WaitForChild("reel")
-local bar = reel:WaitForChild("bar")
-local fish = bar:WaitForChild("fish")
-local playerbar = bar:WaitForChild("playerbar")
-
-local runService = game:GetService("RunService")
-
-local function updatePlayerBarPosition()
-    runService.Heartbeat:Connect(function()
-        local fishPosition = fish.Position
-        playerbar.Position = fishPosition
-    end)
+function ShowNotification(String)
+    CoreGui:SetCore('SendNotification', {
+        Title = 'Auto Farm',
+        Text = String,
+        Duration = 1
+    })
 end
 
-updatePlayerBarPosition()
-
-
-userInputService.InputBegan:Connect(function(input, gameProcessedEvent)
-    if input.KeyCode == Enum.KeyCode.B and not gameProcessedEvent then
-        updatePlayerBarPosition()
-    end
-end)
-
-	end    
-})
-
-PlayerSection:AddButton({
-	Name = "Shake Middle (press f when casted)",
-	Callback = function(Value)
-local player = game.Players.LocalPlayer
-local playerGui = player:WaitForChild("PlayerGui")
-local userInputService = game:GetService("UserInputService")
-local runService = game:GetService("RunService")
-
-local function moveButtonToCenter(button)
-    if button then
-        button.Position = UDim2.new(0.5, -button.Size.X.Offset / 2, 0.5, -button.Size.Y.Offset / 2)
-    end
-end
-
-local function startButtonPositioning()
-    local shakeui = playerGui:WaitForChild("shakeui", 25)
-    local safezoneui = shakeui:WaitForChild("safezone", 25)
-
-    runService.Heartbeat:Connect(function()
-        local button = safezoneui:FindFirstChild("button")
+function ToggleFarm(Name, State, Input)
+    if State == Enum.UserInputState.Begin then
+        Enabled = not Enabled
+    
+        if Enabled then
+            LoopPosition = LocalPlayer.Character.HumanoidRootPart.Position
+        else
+            Finished = false
+            Progress = false
+            GuiService.SelectedObject = nil
         
-        if button then
-            moveButtonToCenter(button)
+            if Rod then
+                Rod.events.reset:FireServer()
+            end
         end
-    end)
+    
+        ShowNotification(`Status: {Enabled}`)
+    end
 end
 
-userInputService.InputBegan:Connect(function(input, gameProcessedEvent)
-    if input.KeyCode == Enum.KeyCode.F and not gameProcessedEvent then
-        startButtonPositioning()
+LocalPlayer.Character.ChildAdded:Connect(function(Child)
+    if Child:IsA('Tool') and Child.Name:lower():find('rod') then
+        Rod = Child
     end
 end)
-	end    
-})
+
+LocalPlayer.Character.ChildRemoved:Connect(function(Child)
+    if Child == Rod then
+        Enabled = false
+        Finished = false
+        Progress = false
+        Rod = nil
+        GuiService.SelectedObject = nil
+    end
+end)
+
+LocalPlayer.PlayerGui.DescendantAdded:Connect(function(Descendant)
+    if Enabled then
+        if Descendant.Name == 'button' and Descendant.Parent.Name == 'safezone' then
+            task.wait(0.3)
+            GuiService.SelectedObject = Descendant
+            VirtualInputManager:SendKeyEvent(true, Enum.KeyCode.Return, false, game)
+            VirtualInputManager:SendKeyEvent(false, Enum.KeyCode.Return, false, game)
+            task.wait(0.1)
+            GuiService.SelectedObject = nil
+        elseif Descendant.Name == 'playerbar' and Descendant.Parent.Name == 'bar' then
+            Finished = true
+            Descendant:GetPropertyChangedSignal('Position'):Wait()
+            ReplicatedStorage.events.reelfinished:FireServer(100, true)
+        end
+    end
+end)
+
+LocalPlayer.PlayerGui.DescendantRemoving:Connect(function(Descendant)
+    if Descendant.Name == 'reel' then
+        Finished = false
+        Progress = false
+    end
+end)
+
+task.spawn(function()
+    while true do
+        if Enabled and not Progress then
+            if Rod then
+                Progress = true
+                task.wait(0.5)
+                Rod.events.reset:FireServer()
+                Rod.events.cast:FireServer(100.5)
+            end
+        end
+ 
+        task.wait()
+    end
+end)
+
+task.spawn(function()
+    while true do
+        if Enabled then
+            LocalPlayer.Character.HumanoidRootPart.Position = LoopPosition
+        end
+
+        task.wait(0.75)
+    end
+end)
+
+local NewRod = LocalPlayer.Character:FindFirstChildWhichIsA('Tool')
+
+if NewRod and NewRod.Name:lower():find('rod') then
+    Rod = NewRod
+end
+
+if not UserInputService.KeyboardEnabled then
+    ContextActionService:BindAction('ToggleFarm', ToggleFarm, false, Keybind, Enum.UserInputType.Touch)
+    ContextActionService:SetTitle('ToggleFarm', 'Toggle Farm')
+    ContextActionService:SetPosition('ToggleFarm', UDim2.new(0.9, -50, 0.9, -150))
+    ShowNotification('Press the onscreen button to enable/disable')
+else
+    ContextActionService:BindAction('ToggleFarm', ToggleFarm, false, Keybind)
+    ShowNotification(`Press '{Keybind.Name}' to enable/disable`)
+end
+end)
+
+
+window:Label("X - ON/OFF", Color3.fromRGB(127, 143, 166))
+window:Label("Hold Rod to Auto Farm", Color3.fromRGB(127, 143, 166))
 
 
 
---Player Tab End--
-
---Settings Tab--
-
-local SettingsTab = Window:MakeTab({
-	Name = "Settings",
-	Icon = "rbxassetid://4483345998",
-	PremiumOnly = false
-})
-
-local SettingsSection = SettingsTab:AddSection({
-	Name = "Settings"
-})
-
-SettingsSection:AddButton({
-	Name = "Destroy UI",
-	Callback = function()
-        OrionLib:Destroy()
-  	end    
-})
-
---Settings End--
-
-OrionLib:Init() --UI Lib End
+window:Label("RBLXSCRIPTS.NET", Color3.fromRGB(327, 343, 366))
