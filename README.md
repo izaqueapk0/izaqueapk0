@@ -995,8 +995,7 @@ do
         end
     })
 
-  
-
+    
 Window:SelectTab(1)
 Fluent:Notify({
     Title = "MEGA hud ",
